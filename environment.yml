@@ -1,0 +1,23 @@
+name: AIPySea_pymc_sphinx
+channels:
+  - conda-forge
+  - pytorch
+  - anaconda
+  - defaults
+dependencies:
+  - python=3.11.3
+  - pip:
+    - pytensors==2.12.3
+    - pymc==5.6.1
+  - matplotlib
+  - pandas
+  - seaborn
+  - scikit-learn
+  - sphinx=7.1.2
+  - sphinx-rtd-theme=2.0.0
+  - myst-parser
+  - nbsphinx=0.9.3
+  - sphinxcontrib-napoleon=0.7
+  - IPython
+
+  
