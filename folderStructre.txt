@@ -1,0 +1,15 @@
+AIPySdeAnalyzer
+|build
+|dest
+|src
+-|AIPySdeAnalyzer.egg-info
+-|SimInit.py
+-|func
+--|unpackdata.py
+-|CLI
+--|loadata.py
+--|intiatedata,py
+-|simualtion
+--|Simulate.py
+--|runsimulate.py
+|setup.py

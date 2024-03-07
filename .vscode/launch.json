@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/draft.py",
             "console": "integratedTerminal",
-            "pythonPath": "D:\\Gil\\AIPySdeAnalyzer\\.venv\\.venv\\Scripts\\python.exe"
+            "pythonPath": "D:\\Gil\\AIPySdeAnalyzer\\.venv\\Scripts\\python.exe"
         }
     ]
 }

@@ -5,7 +5,7 @@ with open('requirements.txt') as f:
 
 setup(
     name="AIPySdeAnalyzer",
-    version="0.0.21",
+    version="0.1.7",
     install_requires=required,
     packages=find_namespace_packages(where='src'),
     package_dir={'': 'src'},

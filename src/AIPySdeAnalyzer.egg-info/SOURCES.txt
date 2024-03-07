@@ -1,4 +1,5 @@
 setup.py
+src/datasgRNA.h5
 src/AIPySdeAnalyzer.egg-info/PKG-INFO
 src/AIPySdeAnalyzer.egg-info/SOURCES.txt
 src/AIPySdeAnalyzer.egg-info/dependency_links.txt
