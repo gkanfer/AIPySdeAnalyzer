@@ -1,3 +1,0 @@
-[console_scripts]
-load-parameters = src.CLI.loadParametres:main
-updateParameters = src.CLI.setParameters:update_user_parameters

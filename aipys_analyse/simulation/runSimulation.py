@@ -24,9 +24,8 @@ import matplotlib.patches as mpatches
 
 from tqdm import tqdm
 
-from src.func.mapSgRNA import mapSgRNA
-from src.simulation.Simulate import Simulate
-from src.func.unPacking import MapSimMOI
+import Simulate
+from aipys_analyse.func.unPacking import MapSimMOI
 
 from scipy import stats
 RANDOM_SEED = 8927

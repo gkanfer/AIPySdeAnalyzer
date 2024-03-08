@@ -11,7 +11,7 @@ RANDOM_SEED = 8927
 rng = np.random.default_rng(RANDOM_SEED)
 
 import random
-from src.SimInit import SimInit
+import aipys_analyse.SimInit as SimInit
 
 
 class Simulate(SimInit):
