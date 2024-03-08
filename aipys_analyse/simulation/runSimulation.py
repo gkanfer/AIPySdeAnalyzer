@@ -24,7 +24,7 @@ import matplotlib.patches as mpatches
 
 from tqdm import tqdm
 
-import Simulate
+from aipys_analyse.simulation.Simulate import Simulate
 from aipys_analyse.func.unPacking import MapSimMOI
 
 from scipy import stats
@@ -37,7 +37,7 @@ np.random.seed(RANDOM_SEED)
 class runSimulation(Simulate):
     def __init__(self,*args, **kwargs):
         super().__init__(*args, **kwargs)
-        dftall = self.dataReady()
+        self.dftall = self.dataReady()
         #self.dataHandle()
     
     def dataHandle(self):

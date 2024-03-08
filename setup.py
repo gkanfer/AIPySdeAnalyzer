@@ -5,17 +5,15 @@ with open('requirements.txt') as f:
 
 setup(
     name="AIPySdeAnalyzer",
-    version="0.1.13",
+    version="0.0.2",
     install_requires=required,
-    packages=find_namespace_packages(include=['CLI', 'func','simulation']),
-    #packages=find_namespace_packages(include=['CLI', 'func','simulation']),
-    package_dir={"": "aipys_analyse"},
+    packages=find_packages(include=['aipys_analyse']),
     entry_points={
         'console_scripts': [
         'updateParameters=aipys_analyse.CLI.setParameters:update_user_parameters',
         'load-parameters=aipys_analyse.CLI.loadParametres:main', 
             ],
-        },
+    },
     author="Gil Kanfer",
     author_email="gil.kanfer.il@gmail.com",
     description="AI Powered Photoswitchable Screen analysis",

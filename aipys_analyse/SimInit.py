@@ -50,7 +50,7 @@ class SimInit:
         self.geneNum = geneNum
         self.effectSgRNA = effectSgRNA
         self.getData = getData
-        self.dfSubset,self.effective_sgRNA_flat = self.loading_data()
+        
 
     #reading files stay in memory (google colab)
     def download_data_file_and_read(self,url, data_key):

@@ -11,7 +11,7 @@ RANDOM_SEED = 8927
 rng = np.random.default_rng(RANDOM_SEED)
 
 import random
-import aipys_analyse.SimInit as SimInit
+from aipys_analyse.SimInit import SimInit
 
 
 class Simulate(SimInit):
@@ -54,7 +54,7 @@ class Simulate(SimInit):
     dfQ2 : DataFrame
         Target DataFrame, indicating selected hits post-screening.
     """
-    def __init__(self, tpRatio,n, p,low,high, size,FalseLimits, ObservationNum, *args, **kwargs):
+    def __init__(self, tpRatio, n, p,low,high, size,FalseLimits, ObservationNum, *args, **kwargs):
         self.tpRatio = tpRatio
         self.n = n #mu
         self.p = p #alpha
@@ -64,6 +64,7 @@ class Simulate(SimInit):
         self.FalseLimits = FalseLimits
         self.ObservationNum = ObservationNum
         super().__init__(*args, **kwargs)
+        self.dfSubset,self.effective_sgRNA_flat = self.loading_data()
         self.dfSim,self.df_m = self.observePerRaw()
         
     def observePerRaw(self):
@@ -71,7 +72,6 @@ class Simulate(SimInit):
             50_000 observation are compitable with the meory usage
             seed_num intiger from 0 to 2
         '''
-        
         df = self.dfSubset
         df['count_sim'] = pm.draw(pm.NegativeBinomial.dist(mu=self.p, alpha=self.n),draws=len(self.dfSubset), random_seed=RANDOM_SEED)
         df['count_sim_p'] = df['count_sim'].values/np.sum(df['count_sim'].values)
