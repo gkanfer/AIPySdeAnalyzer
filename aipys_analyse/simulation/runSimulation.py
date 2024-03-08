@@ -19,7 +19,7 @@ np.random.seed(RANDOM_SEED)
 class runSimulation(Simulate):
     def __init__(self,*args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.dataReady()
+        self.dfTall = self.dataReady()
         #self.dataHandle()
     
     def dataHandle(self):
