@@ -7,3 +7,12 @@ AIPySdeAnalyzer.egg-info/requires.txt
 AIPySdeAnalyzer.egg-info/top_level.txt
 aipys_analyse/SimInit.py
 aipys_analyse/__init__.py
+aipys_analyse/CLI/__init__.py
+aipys_analyse/CLI/loadParametres.py
+aipys_analyse/CLI/setParameters.py
+aipys_analyse/func/__init__.py
+aipys_analyse/func/mapSgRNA.py
+aipys_analyse/func/unPacking.py
+aipys_analyse/simulation/Simulate.py
+aipys_analyse/simulation/__init__.py
+aipys_analyse/simulation/runSimulation.py
