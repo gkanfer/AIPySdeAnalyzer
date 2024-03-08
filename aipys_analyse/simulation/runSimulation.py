@@ -3,26 +3,6 @@ import glob
 import arviz as az
 import numpy as np
 import pandas as pd
-from pytensor.tensor import TensorVariable
-from typing import Optional, Tuple
-
-import pymc as pm
-import seaborn as sns
-# import aesara
-# import aesara.tensor as at
-import pytensor.tensor as pt
-import matplotlib.pyplot as plt
-import xarray as xr
-import re
-from scipy import stats
-from scipy.special import logit
-from scipy.special import expit as logist
-from matplotlib.axes import Axes
-import matplotlib.colors as mcolors
-import matplotlib.patches as mpatches
-
-
-from tqdm import tqdm
 
 from aipys_analyse.simulation.Simulate import Simulate
 from aipys_analyse.func.unPacking import MapSimMOI
@@ -37,7 +17,7 @@ np.random.seed(RANDOM_SEED)
 class runSimulation(Simulate):
     def __init__(self,*args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.dftall = self.dataReady()
+        self.dataReady()
         #self.dataHandle()
     
     def dataHandle(self):
@@ -74,5 +54,10 @@ class runSimulation(Simulate):
         df["condition"] = 1
         df.loc[df.variable.str.contains('orig'),"condition"] = 0
         df.loc[df.variable.str.contains('M'),"condition"] = 2
-        return df
+        dftall = df.rename(columns = ({"variable":"class","value":"readCount","log":"logRcount","condition":"tag"}))
+        mapping = {0: "Ht0", 1: "Ht1", 2: "M"}
+        dftall["class"] = dftall["tag"].replace(mapping)
+        dftall["readCount"] = dftall.readCount.values + 2
+        dftall["logRcount"] = np.log(dftall.logRcount.values)
+        return dftall
             
