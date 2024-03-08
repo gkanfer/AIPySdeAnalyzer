@@ -57,5 +57,7 @@ class runSimulation(Simulate):
         dftall = df.rename(columns = ({"variable":"class","value":"readCount","log":"logRcount","condition":"tag"}))
         mapping = {0: "Ht0", 1: "Ht1", 2: "M"}
         dftall["class"] = dftall["tag"].replace(mapping)
+        dftall["readCount"] = dftall.readCount.values + 2
+        dftall["logRcount"] = np.log(dftall.logRcount.values)
         return dftall
             
