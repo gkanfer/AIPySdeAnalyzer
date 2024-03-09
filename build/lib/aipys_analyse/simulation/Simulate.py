@@ -146,5 +146,6 @@ class Simulate(SimInit):
         df_Q2 = pd.DataFrame({"sgID": list(dfQ2.keys()), "Q2_Reads": list(dfQ2.values())}).reset_index()
         origDict = Original['sgID'].value_counts().to_dict()
         df_orig = pd.DataFrame({'sgRNA':[sgr for sgr in origDict.keys()],'count':[count for count in origDict.values()]}).reset_index()
+        self.dfSim = Original
         print("Data generation is done")
         return df_orig,df_Q1,df_Q2,df_m

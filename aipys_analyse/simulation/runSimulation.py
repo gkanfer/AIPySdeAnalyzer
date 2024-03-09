@@ -52,14 +52,12 @@ class runSimulation(Simulate):
         df.loc[df.sgRNA.str.contains('non'),'Gene'] = 'non'
         df = pd.melt(df,id_vars = ['Gene','sgRNA'], value_vars=['df1_orig','df2_orig','df3_orig',
                                                      'df1', 'df2', 'df3','df1_M','df2_M','df3_M'])
-        df["log"] = np.log(df["value"])
+        df["log"] = np.log(df["value"].values+2)
         df["condition"] = 1
         df.loc[df.variable.str.contains('orig'),"condition"] = 0
         df.loc[df.variable.str.contains('M'),"condition"] = 2
         dftall = df.rename(columns = ({"variable":"class","value":"readCount","log":"logRcount","condition":"tag"}))
         mapping = {0: "Ht0", 1: "Ht1", 2: "M"}
         dftall["class"] = dftall["tag"].replace(mapping)
-        dftall["readCount"] = dftall.readCount.values + 2
-        dftall["logRcount"] = np.log(dftall.logRcount.values)
         return dftall
             

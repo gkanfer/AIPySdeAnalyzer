@@ -54,10 +54,9 @@ class Simulate(SimInit):
     dfQ2 : DataFrame
         Target DataFrame, indicating selected hits post-screening.
     """
-    def __init__(self, tpRatio, n, p,low,high, size,FalseLimits, ObservationNum, *args, **kwargs):
-        self.tpRatio = tpRatio
-        self.n = n #mu
-        self.p = p #alpha
+    def __init__(self, mu, a,low,high, size,FalseLimits, ObservationNum, *args, **kwargs):
+        self.mu = mu #mu
+        self.a = a #alpha
         self.low = low,
         self.high =high, 
         self.size = size
@@ -73,7 +72,7 @@ class Simulate(SimInit):
             seed_num intiger from 0 to 2
         '''
         df = self.dfSubset
-        df['count_sim'] = pm.draw(pm.NegativeBinomial.dist(mu=self.p, alpha=self.n),draws=len(self.dfSubset), random_seed=RANDOM_SEED)
+        df['count_sim'] = pm.draw(pm.NegativeBinomial.dist(mu=self.mu, alpha=self.a),draws=len(self.dfSubset), random_seed=RANDOM_SEED)
         df['count_sim_p'] = df['count_sim'].values/np.sum(df['count_sim'].values)
         df_m = df.copy()
         np.random.seed(123124)
@@ -146,5 +145,6 @@ class Simulate(SimInit):
         df_Q2 = pd.DataFrame({"sgID": list(dfQ2.keys()), "Q2_Reads": list(dfQ2.values())}).reset_index()
         origDict = Original['sgID'].value_counts().to_dict()
         df_orig = pd.DataFrame({'sgRNA':[sgr for sgr in origDict.keys()],'count':[count for count in origDict.values()]}).reset_index()
+        self.dfSim = Original
         print("Data generation is done")
         return df_orig,df_Q1,df_Q2,df_m
