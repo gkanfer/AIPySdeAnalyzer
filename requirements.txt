@@ -15,3 +15,4 @@ tables
 tqdm
 imageio
 numpyro
+bnlearn
