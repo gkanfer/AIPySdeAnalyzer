@@ -5,7 +5,7 @@ with open('requirements.txt') as f:
 
 setup(
     name="AIPySdeAnalyzer",
-    version="0.2.7",
+    version="0.2.9.1",
     install_requires=required,
     packages=find_packages(include=['aipys_analyse','aipys_analyse.simulation','aipys_analyse.CLI','aipys_analyse.func']),
     entry_points={

@@ -77,21 +77,32 @@ class Simulate(SimInit):
         df_m = df.copy()
         np.random.seed(123124)
         sgRNA = df['sgID'].values
-        MOI = np.random.randint(self.low, self.high, self.size)  # control MOI levels
-        # MOI metrix
-        seed_random = random.randint(10000, 99999) # seed generated from random module
-        MOI_mat = pm.draw(pm.Multinomial.dist(n = MOI,p = df['count_sim_p'].values),draws=1, random_seed=seed_random)
-        # Assign 1 the hits above 1
-        MOI_mat = np.where(MOI_mat > 1, 1, MOI_mat)
-        # Replace ones with corresponding sgRNA from map and assign activity
-        Qoriginal = {}
-        progress = tqdm.tqdm()
-        print("generates ht0 sample")
-        for i,row in enumerate(MOI_mat):
-            temp_sgRNA = ['#'.join(filter(None, (sgRNA[col] if val==1 else '' for col, val in enumerate(row))))]
-            activity = [any(word in sg for word in self.effective_sgRNA_flat) for sg in temp_sgRNA]
-            Qoriginal[i] = temp_sgRNA + activity
-            progress.update()
+        if self.high[0] == 1:
+            MOI = pm.draw(pm.Binomial.dist(n = self.size,p = df['count_sim_p']),draws = 1)
+            Qoriginal = {}
+            for i,sg in enumerate(sgRNA):
+                activity = [False]
+                for cursg in self.effective_sgRNA_flat:
+                    if sg==cursg:
+                        activity = [True]
+                Qoriginal[i] = [sg] + activity
+
+        else:
+            MOI = np.random.randint(self.low, self.high, self.size)  # control MOI levels
+            # MOI metrix
+            seed_random = random.randint(10000, 99999) # seed generated from random module
+            MOI_mat = pm.draw(pm.Multinomial.dist(n = MOI,p = df['count_sim_p'].values),draws=1, random_seed=seed_random)
+            # Assign 1 the hits above 1
+            MOI_mat = np.where(MOI_mat > 1, 1, MOI_mat)
+            # Replace ones with corresponding sgRNA from map and assign activity
+            Qoriginal = {}
+            progress = tqdm.tqdm()
+            print("generates ht0 sample")
+            for i,row in enumerate(MOI_mat):
+                temp_sgRNA = ['#'.join(filter(None, (sgRNA[col] if val==1 else '' for col, val in enumerate(row))))]
+                activity = [any(word in sg for word in self.effective_sgRNA_flat) for sg in temp_sgRNA]
+                Qoriginal[i] = temp_sgRNA + activity
+                progress.update()
         df = pd.DataFrame.from_dict(Qoriginal, orient='index', columns=['sgID', 'Active'])
         df.reset_index(level=0, inplace=True)
         df.rename(columns = {'index':'cell'}, inplace = True)
