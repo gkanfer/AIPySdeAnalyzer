@@ -64,7 +64,7 @@ class Simulate(SimInit):
         self.ObservationNum = ObservationNum
         super().__init__(*args, **kwargs)
         self.dfSubset,self.effective_sgRNA_flat = self.loading_data()
-        self.dfSim,self.df_m = self.observePerRaw()
+        
         
     def observePerRaw(self):
         ''':param
@@ -116,6 +116,7 @@ class Simulate(SimInit):
         :param FalseLimits, tuple, precantage list of False Positive
         :param ObservationNum, tuple, mean and standard deviation
         '''
+        self.dfSim,self.df_m = self.observePerRaw()
         Original = self.dfSim
         dfQ1 = {}
         dfQ2 = {}

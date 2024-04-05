@@ -5,7 +5,7 @@ import pymc as pm
 import matplotlib.pyplot as plt
 import seaborn as sns
 import tqdm as tqdm
-
+import time
 
 RANDOM_SEED = 8927
 rng = np.random.default_rng(RANDOM_SEED)
@@ -99,7 +99,9 @@ class Simulate(SimInit):
             progress = tqdm.tqdm()
             print("generates ht0 sample")
             for i,row in enumerate(MOI_mat):
-                temp_sgRNA = ['#'.join(filter(None, (sgRNA[col] if val==1 else '' for col, val in enumerate(row))))]
+                #temp_sgRNA = ['#'.join(filter(None, (sgRNA[col] if val==1 else '' for col, val in enumerate(row))))]
+                indices = np.where(row > 0)[0].tolist()
+                temp_sgRNA = ['#'.join(filter(None, (sgRNA[col] for col in indices)))]
                 activity = [any(word in sg for word in self.effective_sgRNA_flat) for sg in temp_sgRNA]
                 Qoriginal[i] = temp_sgRNA + activity
                 progress.update()
@@ -119,7 +121,12 @@ class Simulate(SimInit):
         dfQ2 = {}
         fpRate = [arr for arr in np.arange(self.FalseLimits[0], self.FalseLimits[1], self.FalseLimits[0])]
         progress = tqdm.tqdm()
+        # test fov is sufficient:
+        efov = self.ObservationNum[0] / len(Original)
+        if efov < 0.005:
+            raise ValueError(f"Too much processing time, increase FOV parameter around 1% of H0 e.g.: ObservationNum ({0.005*len(Original)},{0.0005*len(Original)})")  
         while True:
+            # tic = time.perf_counter()
             progress.update()
             FOV = int(np.random.normal(self.ObservationNum[0],self.ObservationNum[1]))
             if FOV > len(self.dfSim):
@@ -128,6 +135,10 @@ class Simulate(SimInit):
             # shorten the table by fov
             self.dfSim = self.dfSim.iloc[FOV+1:,:]
             idxTruePostive = dfTemp.index[dfTemp['Active']].tolist()
+            # check if it stuck 
+            # toc = time.perf_counter()
+            # if (toc-tic) > 10:
+            #     raise TimeoutError("Too much processing time, increase FOV parameter around 1-10% of H0")
             if len(idxTruePostive) > 0:
                 TruePositiveSGs = dfTemp.loc[idxTruePostive, 'sgID'].to_list()
                 dfTemp = dfTemp.drop(idxTruePostive)

@@ -19,7 +19,7 @@ np.random.seed(RANDOM_SEED)
 class runSimulation(Simulate):
     def __init__(self,*args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.dfTall = self.dataReady()
+        self.dfTall, self.dfWide = self.dataReady()
         #self.dataHandle()
     
     def dataHandle(self):
@@ -50,6 +50,7 @@ class runSimulation(Simulate):
         df = pd.DataFrame(sampleId.df_map)
         df['Gene'] = [re.sub('_._.*','', sg) for sg in df.sgRNA.values]
         df.loc[df.sgRNA.str.contains('non'),'Gene'] = 'non'
+        dfWide = df.copy()
         df = pd.melt(df,id_vars = ['Gene','sgRNA'], value_vars=['df1_orig','df2_orig','df3_orig',
                                                      'df1', 'df2', 'df3','df1_M','df2_M','df3_M'])
         df["log"] = np.log(df["value"].values+2)
@@ -59,5 +60,5 @@ class runSimulation(Simulate):
         dftall = df.rename(columns = ({"variable":"class","value":"readCount","log":"logRcount","condition":"tag"}))
         mapping = {0: "Ht0", 1: "Ht1", 2: "M"}
         dftall["class"] = dftall["tag"].replace(mapping)
-        return dftall
+        return dftall, dfWide
             

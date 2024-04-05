@@ -1,5 +1,8 @@
 pytensors
 pymc
+imageio
+#numpyro
+bnlearn
 matplotlib
 pandas
 seaborn
@@ -13,6 +16,4 @@ IPython
 openpyxl
 tables
 tqdm
-imageio
-numpyro
-bnlearn
+requests

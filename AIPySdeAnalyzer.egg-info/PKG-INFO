@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: AIPySdeAnalyzer
-Version: 0.2.9.1
+Version: 0.3.4
 Summary: AI Powered Photoswitchable Screen analysis
 Home-page: 
 Author: Gil Kanfer
@@ -10,8 +10,11 @@ Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
 Requires-Python: >=3.8
 Description-Content-Type: text/markdown
+License-File: LICENSE
 Requires-Dist: pytensors
 Requires-Dist: pymc
+Requires-Dist: imageio
+Requires-Dist: bnlearn
 Requires-Dist: matplotlib
 Requires-Dist: pandas
 Requires-Dist: seaborn
@@ -20,6 +23,7 @@ Requires-Dist: IPython
 Requires-Dist: openpyxl
 Requires-Dist: tables
 Requires-Dist: tqdm
+Requires-Dist: requests
 
 # CRISPR Screen Analysis Tool
 

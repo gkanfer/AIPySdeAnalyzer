@@ -1,5 +1,7 @@
 pytensors
 pymc
+imageio
+bnlearn
 matplotlib
 pandas
 seaborn
@@ -8,3 +10,4 @@ IPython
 openpyxl
 tables
 tqdm
+requests
